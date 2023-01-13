@@ -1,0 +1,31 @@
+[
+    {
+        "id": "3d8aca8c0f560b9f",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b56145eadeb2d3e0",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1746b35d01041e6d",
+        "type": "python-function",
+        "z": "b56145eadeb2d3e0",
+        "name": "",
+        "func": "test = 1;\n\nreturn msg",
+        "outputs": 1,
+        "x": 460,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    }
+]
