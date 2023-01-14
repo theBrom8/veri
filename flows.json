@@ -12,7 +12,7 @@
         "type": "python-function",
         "z": "6a5477bf5d413357",
         "name": "UserdataAPI",
-        "func": "//Hello\nreturn msg",
+        "func": "import requests\nimport json\n\nurl = \"https://localhost/V1.0/users\"\n\npayload = json.dumps({\n  \"user_id\": \"xyz234\",\n  \"surname\": \"muster\",\n  \"firstname\": \"max\",\n  \"street\": \"Dammweg 8\",\n  \"postcode\": \"1234\",\n  \"city\": \"Zürich\"\n})\nheaders = {\n  'Content-Type': 'application/json'\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\nreturn (response.text)",
         "outputs": 1,
         "x": 690,
         "y": 180,
