@@ -8,16 +8,303 @@
         "env": []
     },
     {
+        "id": "6912fe93ddd83159",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "76a2a5784e57aa33",
         "type": "python-function",
         "z": "6a5477bf5d413357",
-        "name": "UserdataAPI",
-        "func": "//Hello\nreturn msg",
+        "d": true,
+        "name": "addUser",
+        "func": "import requests\nimport json\n\nurl = \"https://localhost/V1.0/users\"\n\npayload = json.dumps({\n  \"user_id\": \"xyz234\",\n  \"surname\": \"muster\",\n  \"firstname\": \"max\",\n  \"street\": \"Dammweg 8\",\n  \"postcode\": \"1234\",\n  \"city\": \"Zürich\"\n})\nheaders = {\n  'Content-Type': 'application/json'\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\nreturn (response.text)",
         "outputs": 1,
-        "x": 690,
-        "y": 180,
+        "x": 820,
+        "y": 100,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "23cb2314f0a0fb76",
+        "type": "debug",
+        "z": "6a5477bf5d413357",
+        "name": "updates",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9b8f97c8191d2da7",
+        "type": "http request",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 630,
+        "y": 380,
+        "wires": [
+            [
+                "23cb2314f0a0fb76"
+            ]
+        ]
+    },
+    {
+        "id": "413681abdfe25bdd",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/John24",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "GET",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "x": 390,
+        "y": 380,
+        "wires": [
+            [
+                "9b8f97c8191d2da7"
+            ]
+        ]
+    },
+    {
+        "id": "2cf3e82c32533de5",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "create Johnny",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"user_id\":\"John24\",\"surname\":\"Jordi\",\"firstname\":\"Johnny\",\"street\":\"Platanenweg 7\",\"postcode\":\"4914\",\"city\":\"Roggwil\",\"access_permitted\":\"yes\",\"connection_id\":\"\",\"state\":\"out\"}",
+        "payloadType": "json",
+        "x": 420,
+        "y": 240,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "4598056d67bfc324",
+        "type": "http request",
+        "z": "6a5477bf5d413357",
+        "name": "emptyRequest",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 640,
+        "y": 240,
+        "wires": [
+            [
+                "ee6c50822afd3ba9"
+            ]
+        ]
+    },
+    {
+        "id": "ee6c50822afd3ba9",
+        "type": "debug",
+        "z": "6a5477bf5d413357",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "334152706bf0c0db",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "update Johnny",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/John24",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "PUT",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "topic": "",
+        "payload": "{\"access_permitted\":\"yes\",\"connection_id\":\"8\",\"state\":\"in\"}",
+        "payloadType": "json",
+        "x": 420,
+        "y": 300,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "b36aa30.3a7276",
+        "type": "http request",
+        "z": "6912fe93ddd83159",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "1ef9987c.956c78"
+            ]
+        ]
+    },
+    {
+        "id": "11167f67.5d5031",
+        "type": "inject",
+        "z": "6912fe93ddd83159",
+        "name": "cars on craigslist",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://vancouver.craigslist.org/search/sss?format=rss&query=cars",
+        "payloadType": "str",
+        "x": 240,
+        "y": 240,
+        "wires": [
+            [
+                "70154cd4.de1444"
+            ]
+        ]
+    },
+    {
+        "id": "70154cd4.de1444",
+        "type": "change",
+        "z": "6912fe93ddd83159",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "b36aa30.3a7276"
+            ]
+        ]
+    },
+    {
+        "id": "1ef9987c.956c78",
+        "type": "debug",
+        "z": "6912fe93ddd83159",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 240,
+        "wires": []
     }
 ]
