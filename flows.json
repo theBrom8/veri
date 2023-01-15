@@ -92,7 +92,7 @@
         "once": true,
         "onceDelay": "10",
         "topic": "",
-        "x": 390,
+        "x": 370,
         "y": 380,
         "wires": [
             [
@@ -141,7 +141,7 @@
         "z": "6a5477bf5d413357",
         "name": "http request",
         "method": "use",
-        "ret": "txt",
+        "ret": "obj",
         "paytoqs": "body",
         "url": "",
         "tls": "",
@@ -209,6 +209,72 @@
         "wires": [
             [
                 "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "f525a37609598b6c",
+        "type": "http request",
+        "z": "6a5477bf5d413357",
+        "name": "http request",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://127.0.0.1:5900/V1.0/users/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 630,
+        "y": 500,
+        "wires": [
+            [
+                "e917b8ae918955b8"
+            ]
+        ],
+        "info": "set by . methode \r\nand .url \r\nand .payload"
+    },
+    {
+        "id": "e917b8ae918955b8",
+        "type": "debug",
+        "z": "6a5477bf5d413357",
+        "name": "all users",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "cf3f925a81b53bad",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "test",
+        "x": 430,
+        "y": 500,
+        "wires": [
+            [
+                "f525a37609598b6c"
             ]
         ]
     },
