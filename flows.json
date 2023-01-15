@@ -16,6 +16,33 @@
         "env": []
     },
     {
+        "id": "2ad92edb5a6cc2b1",
+        "type": "mqtt-broker",
+        "name": "Dashboard",
+        "broker": "86.119.32.210",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
         "id": "76a2a5784e57aa33",
         "type": "python-function",
         "z": "6a5477bf5d413357",
@@ -232,7 +259,8 @@
         "y": 500,
         "wires": [
             [
-                "e917b8ae918955b8"
+                "e917b8ae918955b8",
+                "2bbdfb3fd11cb291"
             ]
         ],
         "info": "set by . methode \r\nand .url \r\nand .payload"
@@ -277,6 +305,24 @@
                 "f525a37609598b6c"
             ]
         ]
+    },
+    {
+        "id": "2bbdfb3fd11cb291",
+        "type": "mqtt out",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "topic": "fhnw/veri/pro2/zugangskontrolle",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2ad92edb5a6cc2b1",
+        "x": 1010,
+        "y": 540,
+        "wires": []
     },
     {
         "id": "b36aa30.3a7276",
