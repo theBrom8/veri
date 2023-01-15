@@ -279,6 +279,41 @@
         ]
     },
     {
+        "id": "f6a9ad297fd31d04",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "create Nici",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"user_id\":\"Nici97\",\"surname\":\"Perrin\",\"firstname\":\"Nicola\",\"street\":\"Hinterwaeldlerstrasse\",\"postcode\":\"7000\",\"city\":\"HingeremMomnd\",\"access_permitted\":\"yes\",\"connection_id\":\"\",\"state\":\"out\"}",
+        "payloadType": "json",
+        "x": 370,
+        "y": 160,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
         "id": "b36aa30.3a7276",
         "type": "http request",
         "z": "6912fe93ddd83159",
