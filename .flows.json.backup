@@ -16,6 +16,33 @@
         "env": []
     },
     {
+        "id": "2ad92edb5a6cc2b1",
+        "type": "mqtt-broker",
+        "name": "Dashboard",
+        "broker": "86.119.32.210",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
         "id": "76a2a5784e57aa33",
         "type": "python-function",
         "z": "6a5477bf5d413357",
@@ -127,8 +154,8 @@
         "topic": "",
         "payload": "{\"user_id\":\"John24\",\"surname\":\"Jordi\",\"firstname\":\"Johnny\",\"street\":\"Platanenweg 7\",\"postcode\":\"4914\",\"city\":\"Roggwil\",\"access_permitted\":\"yes\",\"connection_id\":\"\",\"state\":\"out\"}",
         "payloadType": "json",
-        "x": 420,
-        "y": 240,
+        "x": 360,
+        "y": 60,
         "wires": [
             [
                 "4598056d67bfc324"
@@ -204,8 +231,8 @@
         "topic": "",
         "payload": "{\"access_permitted\":\"yes\",\"connection_id\":\"8\",\"state\":\"in\"}",
         "payloadType": "json",
-        "x": 290,
-        "y": 300,
+        "x": 490,
+        "y": 100,
         "wires": [
             [
                 "4598056d67bfc324"
@@ -232,7 +259,9 @@
         "y": 500,
         "wires": [
             [
-                "e917b8ae918955b8"
+                "e917b8ae918955b8",
+                "2bbdfb3fd11cb291",
+                "ed725d8e7294b89f"
             ]
         ],
         "info": "set by . methode \r\nand .url \r\nand .payload"
@@ -279,6 +308,24 @@
         ]
     },
     {
+        "id": "2bbdfb3fd11cb291",
+        "type": "mqtt out",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "topic": "fhnw/veri/pro2/zugangskontrolle",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "2ad92edb5a6cc2b1",
+        "x": 1010,
+        "y": 540,
+        "wires": []
+    },
+    {
         "id": "f6a9ad297fd31d04",
         "type": "inject",
         "z": "6a5477bf5d413357",
@@ -303,14 +350,346 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"user_id\":\"Nici97\",\"surname\":\"Perrin\",\"firstname\":\"Nicola\",\"street\":\"Hinterwäldlerstrasse\",\"postcode\":\"7000\",\"city\":\"HingeremMomnd\",\"access_permitted\":\"yes\",\"connection_id\":\"\",\"state\":\"out\"}",
+        "payload": "{\"user_id\":\"Nici97\",\"surname\":\"Perrin\",\"firstname\":\"Nicola\",\"street\":\"Hinterwaeldlerstrasse\",\"postcode\":\"7000\",\"city\":\"HingeremMoond\",\"access_permitted\":\"yes\",\"connection_id\":\"\",\"state\":\"out\"}",
         "payloadType": "json",
-        "x": 370,
+        "x": 350,
+        "y": 20,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "5d48bcb2f2e44685",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "update - allow access",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/Nici97",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "PUT",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "topic": "",
+        "payload": "{\"access_permitted\":\"yes\"}",
+        "payloadType": "json",
+        "x": 580,
+        "y": 20,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "d538d260b1401760",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "create Clint",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"user_id\":\"FHNW18A99CH\",\"surname\":\"Clintwood\",\"firstname\":\"East\",\"street\":\"Dorfstrasse 23\",\"postcode\":\"5022\",\"city\":\"Bern\"}",
+        "payloadType": "json",
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "08365ff900fe510c",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "Clint - allow access",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/FHNW18A99CH",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "PUT",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{\"access_permitted\":\"yes\"}",
+        "payloadType": "json",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "f9c300bce14b5179",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "create Sandy",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"user_id\":\"FHNW23B27CH\",\"surname\":\"Sunshine\",\"firstname\":\"Sandy\",\"street\":\"Wintergasse 5\",\"postcode\":\"4233\",\"city\":\"Sion\"}",
+        "payloadType": "json",
+        "x": 100,
+        "y": 120,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "add2a1e3b0e22929",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "Sandy - allow access",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/FHNW23B27CH",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "PUT",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{\"access_permitted\":\"yes\"}",
+        "payloadType": "json",
+        "x": 120,
         "y": 160,
         "wires": [
             [
                 "4598056d67bfc324"
             ]
+        ]
+    },
+    {
+        "id": "9448157ce1abbbf0",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "create Marta",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"user_id\":\"FHNW68B14CH\",\"surname\":\"Vegas\",\"firstname\":\"Marta\",\"street\":\"Gartenweg 9\",\"postcode\":\"9244\",\"city\":\"Zürich\"}",
+        "payloadType": "json",
+        "x": 90,
+        "y": 200,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "a2c17d844df81bda",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "Marta - allow access",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/FHNW68B14CH",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "PUT",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{\"access_permitted\":\"yes\"}",
+        "payloadType": "json",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "c588790215dd7ce8",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "create Hans",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"user_id\":\"FHNW07A37CH\",\"surname\":\"McClain\",\"firstname\":\"Hans\",\"street\":\"AM Berg 22\",\"postcode\":\"4002\",\"city\":\"Basel\"}",
+        "payloadType": "json",
+        "x": 90,
+        "y": 280,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "da5acda5b352cfe9",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "Hans - allow access",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/FHNW07A37CH",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "PUT",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{\"access_permitted\":\"yes\"}",
+        "payloadType": "json",
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "4598056d67bfc324"
+            ]
+        ]
+    },
+    {
+        "id": "ed725d8e7294b89f",
+        "type": "file",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "filename": "C:\\out.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 960,
+        "y": 440,
+        "wires": [
+            []
         ]
     },
     {
