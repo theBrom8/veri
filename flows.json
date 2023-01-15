@@ -139,7 +139,7 @@
         "id": "4598056d67bfc324",
         "type": "http request",
         "z": "6a5477bf5d413357",
-        "name": "emptyRequest",
+        "name": "http request",
         "method": "use",
         "ret": "txt",
         "paytoqs": "body",
@@ -151,27 +151,29 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 640,
+        "x": 630,
         "y": 240,
         "wires": [
             [
                 "ee6c50822afd3ba9"
             ]
-        ]
+        ],
+        "info": "set by . methode \r\nand .url \r\nand .payload"
     },
     {
         "id": "ee6c50822afd3ba9",
         "type": "debug",
         "z": "6a5477bf5d413357",
-        "name": "debug 2",
+        "name": "editorFeedback",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 880,
+        "x": 900,
         "y": 240,
         "wires": []
     },
@@ -179,7 +181,7 @@
         "id": "334152706bf0c0db",
         "type": "inject",
         "z": "6a5477bf5d413357",
-        "name": "update Johnny",
+        "name": "update - state/permission can only be updated not created",
         "props": [
             {
                 "p": "url",
@@ -202,7 +204,7 @@
         "topic": "",
         "payload": "{\"access_permitted\":\"yes\",\"connection_id\":\"8\",\"state\":\"in\"}",
         "payloadType": "json",
-        "x": 420,
+        "x": 290,
         "y": 300,
         "wires": [
             [
