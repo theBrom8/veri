@@ -19,7 +19,7 @@
         "id": "bec2bde055a11ad8",
         "type": "tab",
         "label": "Flow 3",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -49,6 +49,12 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
+    },
+    {
+        "id": "9a8fd5c92c96faa5",
+        "type": "websocket-listener",
+        "path": "/entryScanner",
+        "wholemsg": "false"
     },
     {
         "id": "4ac0494ffa37eb7f",
@@ -128,6 +134,7 @@
         "id": "413681abdfe25bdd",
         "type": "inject",
         "z": "6a5477bf5d413357",
+        "d": true,
         "name": "",
         "props": [
             {
@@ -482,7 +489,7 @@
         "once": true,
         "onceDelay": "1",
         "topic": "",
-        "payload": "{\"access_permitted\":\"yes\"}",
+        "payload": "{\"access_permitted\":\"no\"}",
         "payloadType": "json",
         "x": 110,
         "y": 80,
@@ -720,6 +727,272 @@
         ]
     },
     {
+        "id": "8662a1f3b8d381a2",
+        "type": "websocket in",
+        "z": "6a5477bf5d413357",
+        "name": "entryScanner",
+        "server": "9a8fd5c92c96faa5",
+        "client": "",
+        "x": 90,
+        "y": 620,
+        "wires": [
+            [
+                "5582805653f9b251",
+                "1b94a2f77de9b485"
+            ]
+        ]
+    },
+    {
+        "id": "3cf26241e2dc30fd",
+        "type": "debug",
+        "z": "6a5477bf5d413357",
+        "name": "permited?",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "cbde57569b670bfe",
+        "type": "http request",
+        "z": "6a5477bf5d413357",
+        "name": "ask permission",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 480,
+        "y": 660,
+        "wires": [
+            [
+                "3cf26241e2dc30fd",
+                "30c6dd32e8411a68"
+            ]
+        ],
+        "info": "set by . methode \r\nand .url \r\nand .payload"
+    },
+    {
+        "id": "5582805653f9b251",
+        "type": "function",
+        "z": "6a5477bf5d413357",
+        "name": "make URL",
+        "func": "var payload = JSON.parse(msg.payload);\n\nmsg.url = \"http://127.0.0.1:5900/V1.0/users/\" + payload.scannedID;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 660,
+        "wires": [
+            [
+                "cbde57569b670bfe"
+            ]
+        ]
+    },
+    {
+        "id": "1b94a2f77de9b485",
+        "type": "debug",
+        "z": "6a5477bf5d413357",
+        "name": "scannerIN",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "da02d730fdd0d02b",
+        "type": "function",
+        "z": "6a5477bf5d413357",
+        "name": "make URL",
+        "func": "\nmsg.payload = JSON.parse(`{\"state\": \"in\"}`)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 720,
+        "wires": [
+            [
+                "12fc90d059ddcdf4"
+            ]
+        ]
+    },
+    {
+        "id": "30c6dd32e8411a68",
+        "type": "switch",
+        "z": "6a5477bf5d413357",
+        "name": "if allowed",
+        "property": "payload.access_permitted",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "yes",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "no",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 480,
+        "y": 740,
+        "wires": [
+            [
+                "da02d730fdd0d02b"
+            ],
+            [
+                "de1bdfa14d6ae3c7"
+            ]
+        ]
+    },
+    {
+        "id": "12fc90d059ddcdf4",
+        "type": "http request",
+        "z": "6a5477bf5d413357",
+        "name": "change state to \"in\"",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 870,
+        "y": 720,
+        "wires": [
+            [
+                "de1bdfa14d6ae3c7"
+            ]
+        ],
+        "info": "set by . methode \r\nand .url \r\nand .payload"
+    },
+    {
+        "id": "de1bdfa14d6ae3c7",
+        "type": "debug",
+        "z": "6a5477bf5d413357",
+        "name": "entry-end",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "add64a86bfae90c4",
+        "type": "inject",
+        "z": "6a5477bf5d413357",
+        "name": "Clint - force out",
+        "props": [
+            {
+                "p": "url",
+                "v": "http://127.0.0.1:5900/V1.0/users/FHNW18A99CH",
+                "vt": "str"
+            },
+            {
+                "p": "method",
+                "v": "PUT",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{\"state\":\"out\"}",
+        "payloadType": "json",
+        "x": 260,
+        "y": 880,
+        "wires": [
+            [
+                "31ac5eeff06aa10d"
+            ]
+        ]
+    },
+    {
+        "id": "31ac5eeff06aa10d",
+        "type": "http request",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 450,
+        "y": 880,
+        "wires": [
+            [
+                "7cfab55380a0dfaa"
+            ]
+        ],
+        "info": "set by . methode \r\nand .url \r\nand .payload"
+    },
+    {
+        "id": "7cfab55380a0dfaa",
+        "type": "debug",
+        "z": "6a5477bf5d413357",
+        "name": "out?",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 880,
+        "wires": []
+    },
+    {
         "id": "b36aa30.3a7276",
         "type": "http request",
         "z": "6912fe93ddd83159",
@@ -817,31 +1090,6 @@
         "wires": []
     },
     {
-        "id": "a00a14e6e17ebe11",
-        "type": "OpcUa-Client",
-        "z": "bec2bde055a11ad8",
-        "endpoint": "4ac0494ffa37eb7f",
-        "action": "read",
-        "deadbandtype": "a",
-        "deadbandvalue": 1,
-        "time": 10,
-        "timeUnit": "s",
-        "certificate": "n",
-        "localfile": "",
-        "localkeyfile": "",
-        "securitymode": "None",
-        "securitypolicy": "None",
-        "folderName4PKI": "",
-        "name": "ns=2;i=17",
-        "x": 260,
-        "y": 220,
-        "wires": [
-            [
-                "78c77b3e7c136108"
-            ]
-        ]
-    },
-    {
         "id": "cfc693798a19a770",
         "type": "inject",
         "z": "bec2bde055a11ad8",
@@ -897,22 +1145,6 @@
         ]
     },
     {
-        "id": "fd7bd63d.2f3178",
-        "type": "OpcUa-Item",
-        "z": "bec2bde055a11ad8",
-        "item": "ns=5;s=Random1",
-        "datatype": "Integer",
-        "value": "",
-        "name": "Random1",
-        "x": 360,
-        "y": 540,
-        "wires": [
-            [
-                "a6eb9ec.c21db6"
-            ]
-        ]
-    },
-    {
         "id": "2dd2dd3c.5d9b72",
         "type": "inject",
         "z": "bec2bde055a11ad8",
@@ -942,56 +1174,6 @@
         "x": 860,
         "y": 580,
         "wires": []
-    },
-    {
-        "id": "7b069e3f.171f5",
-        "type": "OpcUa-Item",
-        "z": "bec2bde055a11ad8",
-        "item": "ns=4;s=DateTime",
-        "datatype": "String",
-        "value": "",
-        "name": "DateTime",
-        "x": 360,
-        "y": 620,
-        "wires": [
-            [
-                "a6eb9ec.c21db6",
-                "b289b3e3.c303"
-            ]
-        ]
-    },
-    {
-        "id": "a6eb9ec.c21db6",
-        "type": "OpcUa-Client",
-        "z": "bec2bde055a11ad8",
-        "endpoint": "66dabf03.46121",
-        "action": "read",
-        "time": "",
-        "name": "Test server (read items)",
-        "x": 590,
-        "y": 580,
-        "wires": [
-            [
-                "8b2daf0a.2ac5b",
-                "ef2f258a.509a58"
-            ]
-        ]
-    },
-    {
-        "id": "c4e6019e.66af7",
-        "type": "OpcUa-Item",
-        "z": "bec2bde055a11ad8",
-        "item": "i=2258",
-        "datatype": "String",
-        "value": "",
-        "name": "Server CurrentTime",
-        "x": 390,
-        "y": 660,
-        "wires": [
-            [
-                "b289b3e3.c303"
-            ]
-        ]
     },
     {
         "id": "4ec38626.22afb8",
@@ -1083,23 +1265,6 @@
         "wires": [
             [
                 "e643c78e.1fe608"
-            ]
-        ]
-    },
-    {
-        "id": "19dfffe3.6c26c",
-        "type": "OpcUa-Client",
-        "z": "bec2bde055a11ad8",
-        "endpoint": "66dabf03.46121",
-        "action": "browse",
-        "time": "",
-        "name": "Test server (browse)",
-        "x": 300,
-        "y": 400,
-        "wires": [
-            [
-                "28d77e5.8101482",
-                "bd51e6e9.102cf8"
             ]
         ]
     },
@@ -1250,39 +1415,6 @@
         ]
     },
     {
-        "id": "27c2bd79.578a32",
-        "type": "OpcUa-Item",
-        "z": "bec2bde055a11ad8",
-        "item": "ns=5;s=Counter1",
-        "datatype": "Double",
-        "value": "",
-        "name": "Counter1",
-        "x": 360,
-        "y": 580,
-        "wires": [
-            [
-                "a6eb9ec.c21db6"
-            ]
-        ]
-    },
-    {
-        "id": "60103cf1.60b664",
-        "type": "OpcUa-Client",
-        "z": "bec2bde055a11ad8",
-        "endpoint": "66dabf03.46121",
-        "action": "browse",
-        "time": "10000",
-        "name": "",
-        "x": 380,
-        "y": 760,
-        "wires": [
-            [
-                "7ceef407.eafb3c",
-                "926dc4c4.041508"
-            ]
-        ]
-    },
-    {
         "id": "7ceef407.eafb3c",
         "type": "debug",
         "z": "bec2bde055a11ad8",
@@ -1321,24 +1453,6 @@
         "x": 830,
         "y": 800,
         "wires": []
-    },
-    {
-        "id": "b289b3e3.c303",
-        "type": "OpcUa-Client",
-        "z": "bec2bde055a11ad8",
-        "endpoint": "66dabf03.46121",
-        "action": "subscribe",
-        "time": "4",
-        "timeUnit": "s",
-        "name": "",
-        "x": 620,
-        "y": 660,
-        "wires": [
-            [
-                "ca827ee0.3633a",
-                "ef2f258a.509a58"
-            ]
-        ]
     },
     {
         "id": "f6f54112.c9ed4",
@@ -1386,21 +1500,6 @@
         ]
     },
     {
-        "id": "e7585aa3.d5d658",
-        "type": "OpcUa-Event",
-        "z": "bec2bde055a11ad8",
-        "root": "ns=2;s=MyLevel.Alarm",
-        "eventtype": "i=2041",
-        "name": "All events from server",
-        "x": 400,
-        "y": 860,
-        "wires": [
-            [
-                "6b885842.c7dfb8"
-            ]
-        ]
-    },
-    {
         "id": "983dcde4.57503",
         "type": "inject",
         "z": "bec2bde055a11ad8",
@@ -1432,24 +1531,6 @@
         "wires": []
     },
     {
-        "id": "6b885842.c7dfb8",
-        "type": "OpcUa-Client",
-        "z": "bec2bde055a11ad8",
-        "endpoint": "66dabf03.46121",
-        "action": "events",
-        "time": "10",
-        "timeUnit": "s",
-        "name": "Alarms & Events",
-        "x": 620,
-        "y": 860,
-        "wires": [
-            [
-                "ff34939.6bc5c7",
-                "dc6df03d.b2e26"
-            ]
-        ]
-    },
-    {
         "id": "dc6df03d.b2e26",
         "type": "function",
         "z": "bec2bde055a11ad8",
@@ -1478,6 +1559,71 @@
         "wires": []
     },
     {
+        "id": "fd7bd63d.2f3178",
+        "type": "OpcUa-Item",
+        "z": "bec2bde055a11ad8",
+        "item": "ns=5;s=Random1",
+        "datatype": "Integer",
+        "value": "",
+        "name": "Random1",
+        "x": 360,
+        "y": 540,
+        "wires": [
+            [
+                "a6eb9ec.c21db6"
+            ]
+        ]
+    },
+    {
+        "id": "7b069e3f.171f5",
+        "type": "OpcUa-Item",
+        "z": "bec2bde055a11ad8",
+        "item": "ns=4;s=DateTime",
+        "datatype": "String",
+        "value": "",
+        "name": "DateTime",
+        "x": 360,
+        "y": 620,
+        "wires": [
+            [
+                "a6eb9ec.c21db6",
+                "b289b3e3.c303"
+            ]
+        ]
+    },
+    {
+        "id": "c4e6019e.66af7",
+        "type": "OpcUa-Item",
+        "z": "bec2bde055a11ad8",
+        "item": "i=2258",
+        "datatype": "String",
+        "value": "",
+        "name": "Server CurrentTime",
+        "x": 390,
+        "y": 660,
+        "wires": [
+            [
+                "b289b3e3.c303"
+            ]
+        ]
+    },
+    {
+        "id": "27c2bd79.578a32",
+        "type": "OpcUa-Item",
+        "z": "bec2bde055a11ad8",
+        "item": "ns=5;s=Counter1",
+        "datatype": "Double",
+        "value": "",
+        "name": "Counter1",
+        "x": 360,
+        "y": 580,
+        "wires": [
+            [
+                "a6eb9ec.c21db6"
+            ]
+        ]
+    },
+    {
         "id": "c2e67110.f1efa",
         "type": "OpcUa-Item",
         "z": "bec2bde055a11ad8",
@@ -1490,6 +1636,133 @@
         "wires": [
             [
                 "b289b3e3.c303"
+            ]
+        ]
+    },
+    {
+        "id": "a00a14e6e17ebe11",
+        "type": "OpcUa-Client",
+        "z": "bec2bde055a11ad8",
+        "endpoint": "4ac0494ffa37eb7f",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "ns=2;i=17",
+        "x": 260,
+        "y": 220,
+        "wires": [
+            [
+                "78c77b3e7c136108"
+            ]
+        ]
+    },
+    {
+        "id": "a6eb9ec.c21db6",
+        "type": "OpcUa-Client",
+        "z": "bec2bde055a11ad8",
+        "endpoint": "66dabf03.46121",
+        "action": "read",
+        "time": "",
+        "name": "Test server (read items)",
+        "x": 590,
+        "y": 580,
+        "wires": [
+            [
+                "8b2daf0a.2ac5b",
+                "ef2f258a.509a58"
+            ]
+        ]
+    },
+    {
+        "id": "19dfffe3.6c26c",
+        "type": "OpcUa-Client",
+        "z": "bec2bde055a11ad8",
+        "endpoint": "66dabf03.46121",
+        "action": "browse",
+        "time": "",
+        "name": "Test server (browse)",
+        "x": 300,
+        "y": 400,
+        "wires": [
+            [
+                "28d77e5.8101482",
+                "bd51e6e9.102cf8"
+            ]
+        ]
+    },
+    {
+        "id": "60103cf1.60b664",
+        "type": "OpcUa-Client",
+        "z": "bec2bde055a11ad8",
+        "endpoint": "66dabf03.46121",
+        "action": "browse",
+        "time": "10000",
+        "name": "",
+        "x": 380,
+        "y": 760,
+        "wires": [
+            [
+                "7ceef407.eafb3c",
+                "926dc4c4.041508"
+            ]
+        ]
+    },
+    {
+        "id": "b289b3e3.c303",
+        "type": "OpcUa-Client",
+        "z": "bec2bde055a11ad8",
+        "endpoint": "66dabf03.46121",
+        "action": "subscribe",
+        "time": "4",
+        "timeUnit": "s",
+        "name": "",
+        "x": 620,
+        "y": 660,
+        "wires": [
+            [
+                "ca827ee0.3633a",
+                "ef2f258a.509a58"
+            ]
+        ]
+    },
+    {
+        "id": "6b885842.c7dfb8",
+        "type": "OpcUa-Client",
+        "z": "bec2bde055a11ad8",
+        "endpoint": "66dabf03.46121",
+        "action": "events",
+        "time": "10",
+        "timeUnit": "s",
+        "name": "Alarms & Events",
+        "x": 620,
+        "y": 860,
+        "wires": [
+            [
+                "ff34939.6bc5c7",
+                "dc6df03d.b2e26"
+            ]
+        ]
+    },
+    {
+        "id": "e7585aa3.d5d658",
+        "type": "OpcUa-Event",
+        "z": "bec2bde055a11ad8",
+        "root": "ns=2;s=MyLevel.Alarm",
+        "eventtype": "i=2041",
+        "name": "All events from server",
+        "x": 400,
+        "y": 860,
+        "wires": [
+            [
+                "6b885842.c7dfb8"
             ]
         ]
     }
