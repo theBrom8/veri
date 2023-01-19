@@ -16,6 +16,14 @@
         "env": []
     },
     {
+        "id": "bec2bde055a11ad8",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "2ad92edb5a6cc2b1",
         "type": "mqtt-broker",
         "name": "Dashboard",
@@ -41,6 +49,18 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
+    },
+    {
+        "id": "4ac0494ffa37eb7f",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://192.168.199.1:5050",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
     },
     {
         "id": "76a2a5784e57aa33",
@@ -787,6 +807,71 @@
         "statusType": "auto",
         "x": 730,
         "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a00a14e6e17ebe11",
+        "type": "OpcUa-Client",
+        "z": "bec2bde055a11ad8",
+        "endpoint": "4ac0494ffa37eb7f",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "ns=2;i=17",
+        "x": 260,
+        "y": 220,
+        "wires": [
+            [
+                "78c77b3e7c136108"
+            ]
+        ]
+    },
+    {
+        "id": "cfc693798a19a770",
+        "type": "inject",
+        "z": "bec2bde055a11ad8",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "ns=17;s=Counter;datatype=Int32",
+        "x": 70,
+        "y": 220,
+        "wires": [
+            [
+                "a00a14e6e17ebe11"
+            ]
+        ]
+    },
+    {
+        "id": "78c77b3e7c136108",
+        "type": "debug",
+        "z": "bec2bde055a11ad8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 220,
         "wires": []
     }
 ]
