@@ -24,6 +24,14 @@
         "env": []
     },
     {
+        "id": "f51dc2b840c3f571",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "2ad92edb5a6cc2b1",
         "type": "mqtt-broker",
         "name": "Dashboard",
@@ -1305,23 +1313,6 @@
         "wires": []
     },
     {
-        "id": "b233ded917802414",
-        "type": "function",
-        "z": "6912fe93ddd83159",
-        "name": "function 2",
-        "func": "let inDoors = msg.payload.user.filter(obj => obj.state === \"in\");\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 840,
-        "y": 260,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "6bf02ba6e51135c8",
         "type": "ui_text",
         "z": "6912fe93ddd83159",
@@ -2014,5 +2005,70 @@
                 "6b885842.c7dfb8"
             ]
         ]
+    },
+    {
+        "id": "f51639f85d4e5eaf",
+        "type": "inject",
+        "z": "f51dc2b840c3f571",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "ns=17;s=Counter;datatype=Int32",
+        "x": 290,
+        "y": 300,
+        "wires": [
+            [
+                "ecf8570a31a9edf0"
+            ]
+        ]
+    },
+    {
+        "id": "ecf8570a31a9edf0",
+        "type": "OpcUa-Client",
+        "z": "f51dc2b840c3f571",
+        "endpoint": "4ac0494ffa37eb7f",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "ns=2;i=Numeric17",
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "0ed02770e544f656"
+            ]
+        ]
+    },
+    {
+        "id": "0ed02770e544f656",
+        "type": "debug",
+        "z": "f51dc2b840c3f571",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 300,
+        "wires": []
     }
 ]

@@ -1272,7 +1272,7 @@
         "type": "function",
         "z": "6912fe93ddd83159",
         "name": "UID im Gebäude",
-        "func": "//var payload = JSON.parse(msg.payload)\nvar inDoors = msg.payload.users.filter(obj => obj.state === \"in\");\nvar names = inDoors.map(obj => obj.firstname + obj.surname);\nmsg.payload = names;\nreturn msg;",
+        "func": "//var payload = JSON.parse(msg.payload)\nvar inDoors = msg.payload.users.filter(obj => obj.state === \"in\");\nvar names = inDoors.map(obj => obj.firstname +\" \"+ obj.surname);\nmsg.payload = names;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
