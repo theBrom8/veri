@@ -27,7 +27,15 @@
         "id": "f51dc2b840c3f571",
         "type": "tab",
         "label": "Flow 4",
-        "disabled": false,
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4fce052797cc1f1e",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -67,7 +75,7 @@
     {
         "id": "4ac0494ffa37eb7f",
         "type": "OpcUa-Endpoint",
-        "endpoint": "opc.tcp://192.168.199.1:5050",
+        "endpoint": "opc.tcp://localhost:5050",
         "secpol": "None",
         "secmode": "None",
         "none": true,
@@ -840,23 +848,6 @@
         ]
     },
     {
-        "id": "ed725d8e7294b89f",
-        "type": "file",
-        "z": "6a5477bf5d413357",
-        "name": "",
-        "filename": "C:\\Users\\Public\\Documents\\out.txt",
-        "filenameType": "str",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "false",
-        "encoding": "none",
-        "x": 1040,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "8662a1f3b8d381a2",
         "type": "websocket in",
         "z": "6a5477bf5d413357",
@@ -1255,6 +1246,23 @@
         "wires": []
     },
     {
+        "id": "ed725d8e7294b89f",
+        "type": "file",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\out.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1020,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "5c8d87f018668bb3",
         "type": "mqtt in",
         "z": "6912fe93ddd83159",
@@ -1268,7 +1276,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 310,
-        "y": 180,
+        "y": 200,
         "wires": [
             [
                 "4107db0f783e6c9b"
@@ -1300,7 +1308,7 @@
         "type": "debug",
         "z": "6912fe93ddd83159",
         "name": "anFHNW",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1327,6 +1335,273 @@
         "className": "",
         "x": 990,
         "y": 120,
+        "wires": []
+    },
+    {
+        "id": "0d6d48732cf033e1",
+        "type": "catch",
+        "z": "6912fe93ddd83159",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 240,
+        "y": 740,
+        "wires": [
+            [
+                "30faa3ee6df32819"
+            ]
+        ]
+    },
+    {
+        "id": "30faa3ee6df32819",
+        "type": "ui_text",
+        "z": "6912fe93ddd83159",
+        "group": "b71bc9c7e37834cc",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Errors",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 570,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "57d158939ba0918f",
+        "type": "file",
+        "z": "6912fe93ddd83159",
+        "name": "Address.txt",
+        "filename": "C:/users/public/opcua/Address.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 990,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bd154da441936108",
+        "type": "file",
+        "z": "6912fe93ddd83159",
+        "name": "Address.txt",
+        "filename": "./public/users/opc-ua/Address.txt",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 990,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7a74e3eb970a12e9",
+        "type": "function",
+        "z": "6912fe93ddd83159",
+        "name": "Items",
+        "func": "msg.payload=msg.browseName+\"|\"+msg.topic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 500,
+        "wires": [
+            [
+                "bd154da441936108",
+                "e43a624c806a9c8c"
+            ]
+        ]
+    },
+    {
+        "id": "82d26a70433f99c3",
+        "type": "trigger",
+        "z": "6912fe93ddd83159",
+        "name": "Clear file",
+        "op1": "object|address",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 600,
+        "y": 440,
+        "wires": [
+            [
+                "57d158939ba0918f"
+            ]
+        ]
+    },
+    {
+        "id": "e43a624c806a9c8c",
+        "type": "debug",
+        "z": "6912fe93ddd83159",
+        "name": "Address items",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1000,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "6ea429c6ccd6f4c3",
+        "type": "template",
+        "z": "6912fe93ddd83159",
+        "name": "OpcUa-Item",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "mustache",
+        "template": "[\n  {\n    \"id\": \"4b12ca9b.e7e184\",\n    \"type\": \"OpcUa-Item\",\n    \"item\": \"{{topic}}\",\n    \"datatype\": \"opcua.DataType.Double\",\n    \"value\": \"66.6\",\n    \"name\": \"{{browseName}}\",\n    \"x\": 251,\n    \"y\": 334,\n    \"z\": \"30ffd2ee.59fdd6\",\n    \"wires\": [\n      [\n        \"70dd1397.3c8e44\"\n      ]\n    ]\n  }\n]",
+        "x": 670,
+        "y": 560,
+        "wires": [
+            [
+                "ccded9dcbaa682ce",
+                "3b2b2dc3316fa36d"
+            ]
+        ]
+    },
+    {
+        "id": "ccded9dcbaa682ce",
+        "type": "function",
+        "z": "6912fe93ddd83159",
+        "name": "Save to lib",
+        "func": "msg.filename=\"./public/users/opc-ua/templates/\"+msg.browseName+\".js\";\nmsg.payload=\"// name: \"+msg.browseName+\"\\n\"+\"// field: payload\\n\"+msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 640,
+        "wires": [
+            [
+                "81791e04411cf399",
+                "5ca3b25082fac3d2"
+            ]
+        ]
+    },
+    {
+        "id": "81791e04411cf399",
+        "type": "debug",
+        "z": "6912fe93ddd83159",
+        "name": "Pre-configured library items",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1040,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "5ca3b25082fac3d2",
+        "type": "file",
+        "z": "6912fe93ddd83159",
+        "name": "OPC UA Items",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 1000,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b2b2dc3316fa36d",
+        "type": "debug",
+        "z": "6912fe93ddd83159",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 990,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c7afbf62c5aa0f2d",
+        "type": "OpcUa-Client",
+        "z": "6912fe93ddd83159",
+        "endpoint": "4ac0494ffa37eb7f",
+        "action": "browse",
+        "deadbandvalue": "",
+        "time": "",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "folderName4PKI": "",
+        "name": "Test server (browse)",
+        "x": 440,
+        "y": 540,
+        "wires": [
+            [
+                "7a74e3eb970a12e9",
+                "6ea429c6ccd6f4c3",
+                "4355a2f677756fe9"
+            ]
+        ]
+    },
+    {
+        "id": "8e94c6c735323cb9",
+        "type": "inject",
+        "z": "6912fe93ddd83159",
+        "name": "Browse",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "ns=2;s=MyDevice",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "82d26a70433f99c3",
+                "c7afbf62c5aa0f2d"
+            ]
+        ]
+    },
+    {
+        "id": "4355a2f677756fe9",
+        "type": "debug",
+        "z": "6912fe93ddd83159",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 700,
         "wires": []
     },
     {
@@ -1700,6 +1975,7 @@
         "z": "bec2bde055a11ad8",
         "name": "",
         "scope": null,
+        "uncaught": false,
         "x": 120,
         "y": 940,
         "wires": [
@@ -1714,8 +1990,13 @@
         "z": "bec2bde055a11ad8",
         "name": "",
         "active": true,
-        "console": "false",
-        "complete": "false",
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
         "x": 370,
         "y": 940,
         "wires": []
@@ -1927,7 +2208,11 @@
         "z": "bec2bde055a11ad8",
         "endpoint": "66dabf03.46121",
         "action": "browse",
+        "deadbandvalue": "",
         "time": "",
+        "localfile": "",
+        "localkeyfile": "",
+        "folderName4PKI": "",
         "name": "Test server (browse)",
         "x": 300,
         "y": 400,
@@ -2064,7 +2349,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 740,
