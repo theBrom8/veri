@@ -82,6 +82,122 @@
         "wholemsg": "false"
     },
     {
+        "id": "5bd754e75a607357",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "f85c2418d10f1bcb",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD.MM.YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "b71bc9c7e37834cc",
+        "type": "ui_group",
+        "name": "Dashboard Zutrittskontrolle",
+        "tab": "5bd754e75a607357",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "76a2a5784e57aa33",
         "type": "python-function",
         "z": "6a5477bf5d413357",
@@ -334,9 +450,9 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "10",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": "1",
         "topic": "test",
         "x": 430,
@@ -905,83 +1021,6 @@
         "info": "set by . methode \r\nand .url \r\nand .payload"
     },
     {
-        "id": "add64a86bfae90c4",
-        "type": "inject",
-        "z": "6a5477bf5d413357",
-        "name": "Clint - force out",
-        "props": [
-            {
-                "p": "url",
-                "v": "http://127.0.0.1:5900/V1.0/users/FHNW18A99CH",
-                "vt": "str"
-            },
-            {
-                "p": "method",
-                "v": "PUT",
-                "vt": "str"
-            },
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "topic": "",
-        "payload": "{\"state\":\"out\"}",
-        "payloadType": "json",
-        "x": 260,
-        "y": 880,
-        "wires": [
-            [
-                "31ac5eeff06aa10d"
-            ]
-        ]
-    },
-    {
-        "id": "31ac5eeff06aa10d",
-        "type": "http request",
-        "z": "6a5477bf5d413357",
-        "name": "",
-        "method": "use",
-        "ret": "obj",
-        "paytoqs": "body",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 450,
-        "y": 880,
-        "wires": [
-            [
-                "7cfab55380a0dfaa"
-            ]
-        ],
-        "info": "set by . methode \r\nand .url \r\nand .payload"
-    },
-    {
-        "id": "7cfab55380a0dfaa",
-        "type": "debug",
-        "z": "6a5477bf5d413357",
-        "name": "out?",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 610,
-        "y": 880,
-        "wires": []
-    },
-    {
         "id": "992f4a06644f0ef6",
         "type": "switch",
         "z": "6a5477bf5d413357",
@@ -1208,90 +1247,51 @@
         "wires": []
     },
     {
-        "id": "b36aa30.3a7276",
-        "type": "http request",
+        "id": "5c8d87f018668bb3",
+        "type": "mqtt in",
         "z": "6912fe93ddd83159",
         "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 570,
-        "y": 240,
+        "topic": "fhnw/veri/pro2/zugangskontrolle",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "2ad92edb5a6cc2b1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 180,
         "wires": [
             [
-                "1ef9987c.956c78"
+                "4107db0f783e6c9b"
             ]
         ]
     },
     {
-        "id": "11167f67.5d5031",
-        "type": "inject",
+        "id": "4107db0f783e6c9b",
+        "type": "function",
         "z": "6912fe93ddd83159",
-        "name": "cars on craigslist",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": "",
-        "topic": "",
-        "payload": "http://vancouver.craigslist.org/search/sss?format=rss&query=cars",
-        "payloadType": "str",
-        "x": 240,
-        "y": 240,
+        "name": "UID im Gebäude",
+        "func": "//var payload = JSON.parse(msg.payload)\nvar inDoors = msg.payload.users.filter(obj => obj.state === \"in\");\nvar names = inDoors.map(obj => obj.firstname + obj.surname);\nmsg.payload = names;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 200,
         "wires": [
             [
-                "70154cd4.de1444"
+                "dc2628308a498704",
+                "6bf02ba6e51135c8"
             ]
         ]
     },
     {
-        "id": "70154cd4.de1444",
-        "type": "change",
-        "z": "6912fe93ddd83159",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 410,
-        "y": 240,
-        "wires": [
-            [
-                "b36aa30.3a7276"
-            ]
-        ]
-    },
-    {
-        "id": "1ef9987c.956c78",
+        "id": "dc2628308a498704",
         "type": "debug",
         "z": "6912fe93ddd83159",
-        "name": "",
+        "name": "anFHNW",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -1300,8 +1300,42 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 730,
-        "y": 240,
+        "x": 980,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b233ded917802414",
+        "type": "function",
+        "z": "6912fe93ddd83159",
+        "name": "function 2",
+        "func": "let inDoors = msg.payload.user.filter(obj => obj.state === \"in\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6bf02ba6e51135c8",
+        "type": "ui_text",
+        "z": "6912fe93ddd83159",
+        "group": "b71bc9c7e37834cc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Anwesend",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 990,
+        "y": 120,
         "wires": []
     },
     {
