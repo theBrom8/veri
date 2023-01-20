@@ -76,6 +76,12 @@
         "login": false
     },
     {
+        "id": "0bb6a6f18cfacea3",
+        "type": "websocket-listener",
+        "path": "/exitScanner",
+        "wholemsg": "false"
+    },
+    {
         "id": "76a2a5784e57aa33",
         "type": "python-function",
         "z": "6a5477bf5d413357",
@@ -790,7 +796,7 @@
         "type": "function",
         "z": "6a5477bf5d413357",
         "name": "make URL",
-        "func": "var payload = JSON.parse(msg.payload);\n\nmsg.url = \"http://127.0.0.1:5900/V1.0/users/\" + payload.scannedID;\nreturn msg;",
+        "func": "var payload = JSON.parse(msg.payload);\nmsg.action = payload.action;\nmsg.url = \"http://127.0.0.1:5900/V1.0/users/\" + payload.scannedID;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -825,14 +831,14 @@
         "id": "da02d730fdd0d02b",
         "type": "function",
         "z": "6a5477bf5d413357",
-        "name": "make URL",
+        "name": "state in",
         "func": "\nmsg.payload = JSON.parse(`{\"state\": \"in\"}`)\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 690,
+        "x": 760,
         "y": 720,
         "wires": [
             [
@@ -862,20 +868,22 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 480,
-        "y": 740,
+        "x": 400,
+        "y": 760,
         "wires": [
             [
-                "da02d730fdd0d02b"
+                "992f4a06644f0ef6"
             ],
-            []
+            [
+                "e9db209e56e79831"
+            ]
         ]
     },
     {
         "id": "12fc90d059ddcdf4",
         "type": "http request",
         "z": "6a5477bf5d413357",
-        "name": "change state to \"in\"",
+        "name": "change state",
         "method": "PUT",
         "ret": "obj",
         "paytoqs": "body",
@@ -887,31 +895,14 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 870,
+        "x": 910,
         "y": 720,
         "wires": [
             [
-                "de1bdfa14d6ae3c7"
+                "5a9003998929883e"
             ]
         ],
         "info": "set by . methode \r\nand .url \r\nand .payload"
-    },
-    {
-        "id": "de1bdfa14d6ae3c7",
-        "type": "debug",
-        "z": "6a5477bf5d413357",
-        "name": "entry-end",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1080,
-        "y": 780,
-        "wires": []
     },
     {
         "id": "add64a86bfae90c4",
@@ -988,6 +979,232 @@
         "statusType": "auto",
         "x": 610,
         "y": 880,
+        "wires": []
+    },
+    {
+        "id": "992f4a06644f0ef6",
+        "type": "switch",
+        "z": "6a5477bf5d413357",
+        "name": "action == enter/exit",
+        "property": "action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "enter",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "exit",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 570,
+        "y": 740,
+        "wires": [
+            [
+                "da02d730fdd0d02b"
+            ],
+            [
+                "1db235f9bf0e2470"
+            ]
+        ]
+    },
+    {
+        "id": "1db235f9bf0e2470",
+        "type": "function",
+        "z": "6a5477bf5d413357",
+        "name": "state out",
+        "func": "\nmsg.payload = JSON.parse(`{\"state\": \"out\"}`)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 760,
+        "wires": [
+            [
+                "2031cf913637eb5d"
+            ]
+        ]
+    },
+    {
+        "id": "49c888015855c074",
+        "type": "websocket in",
+        "z": "6a5477bf5d413357",
+        "name": "exitScanner",
+        "server": "0bb6a6f18cfacea3",
+        "client": "",
+        "x": 90,
+        "y": 700,
+        "wires": [
+            [
+                "5582805653f9b251"
+            ]
+        ]
+    },
+    {
+        "id": "211a31e1f30a3412",
+        "type": "websocket out",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "server": "0bb6a6f18cfacea3",
+        "client": "",
+        "x": 1270,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "f408332bf6eaedbe",
+        "type": "websocket out",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "server": "9a8fd5c92c96faa5",
+        "client": "",
+        "x": 1270,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "5a9003998929883e",
+        "type": "function",
+        "z": "6a5477bf5d413357",
+        "name": "access allowed",
+        "func": "msg.payload = JSON.parse(`{\"access\": \"allowed\"}`)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 720,
+        "wires": [
+            [
+                "f408332bf6eaedbe"
+            ]
+        ]
+    },
+    {
+        "id": "2031cf913637eb5d",
+        "type": "http request",
+        "z": "6a5477bf5d413357",
+        "name": "change state",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 910,
+        "y": 760,
+        "wires": [
+            [
+                "13d0e492eae59dc0"
+            ]
+        ],
+        "info": "set by . methode \r\nand .url \r\nand .payload"
+    },
+    {
+        "id": "13d0e492eae59dc0",
+        "type": "function",
+        "z": "6a5477bf5d413357",
+        "name": "access allowed",
+        "func": "msg.payload = JSON.parse(`{\"access\": \"allowed\"}`)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 760,
+        "wires": [
+            [
+                "211a31e1f30a3412"
+            ]
+        ]
+    },
+    {
+        "id": "939cd9a828423d8e",
+        "type": "switch",
+        "z": "6a5477bf5d413357",
+        "name": "action == enter/exit",
+        "property": "action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "enter",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "exit",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 820,
+        "wires": [
+            [
+                "19112a86216323ca"
+            ],
+            [
+                "3c26c5c0984a4403"
+            ]
+        ]
+    },
+    {
+        "id": "e9db209e56e79831",
+        "type": "function",
+        "z": "6a5477bf5d413357",
+        "name": "access denied",
+        "func": "msg.payload = JSON.parse(`{\"access\": \"denied\"}`)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 800,
+        "wires": [
+            [
+                "939cd9a828423d8e"
+            ]
+        ]
+    },
+    {
+        "id": "19112a86216323ca",
+        "type": "websocket out",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "server": "9a8fd5c92c96faa5",
+        "client": "",
+        "x": 970,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "3c26c5c0984a4403",
+        "type": "websocket out",
+        "z": "6a5477bf5d413357",
+        "name": "",
+        "server": "0bb6a6f18cfacea3",
+        "client": "",
+        "x": 970,
+        "y": 840,
         "wires": []
     },
     {

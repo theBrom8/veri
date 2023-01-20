@@ -2,7 +2,7 @@
 <html>
     <head>
 		<meta charset="utf-8"/>
-        <title>entry page</title>
+        <title>exit page</title>
 		<!-- Script barcode library -->
         <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
     </head>
@@ -14,7 +14,7 @@
 		
         <div id="qr-reader" style="width: 600px"></div>
 		
-		<div>Eingangsscanner</div>
+		<div>Ausgangssscanner</div>
 		<p id="status">-</p>
         <script>
 			<!-- Blendet den QR Scanner ein -->
@@ -35,7 +35,7 @@
 				<!-- Beispiel für ein Objekt das als JSON an den Webserver geschickt wird, die Attribute können frei geändert werden -->
                 var obj = {
                     "scannedID" : decodedText,
-                    "action" : "enter"
+                    "action" : "exit"
                 };
                 
 				<!-- Senden der Daten per Websocket -->
@@ -48,7 +48,7 @@
             html5QrcodeScanner.render(onScanSuccess);
 
 			<!-- websocket öffnen -->
-            var ws = new WebSocket("ws://127.0.0.1:1880/entryScanner"),
+            var ws = new WebSocket("ws://127.0.0.1:1880/exitScanner"),
             
             messages = document.createElement('ul');
             
@@ -59,13 +59,13 @@
 			
 				
 				if(data.access == "allowed"){
-					document.getElementById("status").innerHTML = "Zutritt gewährt";
+					document.getElementById("status").innerHTML = "Austritt gewährt";
 					hideQR();
 					setTimeout(function(){window.location.reload();}, 5000);
 				}
 				
 				if(data.access == "denied"){
-					document.getElementById("status").innerHTML = "Zutritt verweigert";
+					document.getElementById("status").innerHTML = "Austritt verweigert";
 					hideQR();
 					setTimeout(function(){window.location.reload();}, 5000);
 				}
@@ -77,7 +77,7 @@
             
 				<!-- Beispiel Meldung für Verbindung hergestellt -->
                 var obj = {
-                    "type" : "entrypage connected"
+                    "type" : "exitpage connected"
                 };
                 
     			ws.send(JSON.stringify(obj));
